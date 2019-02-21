@@ -25,14 +25,11 @@ module Slackpost
       send_slack(body)
     end
 
-    def send_attachment(msg, channel, att_title, att_value, att_color)
+    def send_attachment(msg, channel, attachments)
       body = { channel: channel,
                link_names: 1,
                text: msg,
-               attachments: [{ fallback: "#{att_title} #{att_value}",
-                               color: att_color,
-                               fields: [{ title: att_title,
-                                          value: att_value }] }] }
+               attachments: [attachments].flatten }
       send_slack(body)
     end
 

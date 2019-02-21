@@ -29,17 +29,23 @@ token do you need, refer to this page: https://api.slack.com/incoming-webhooks
 require 'slackpost'
 
 Slackpost.configure do |config|
-  config.slack_token = "T00000000/B00000000/XXXXXXXXXXXXXXXXXXXXXXXX"
+  config.slack_token = 'T00000000/B00000000/XXXXXXXXXXXXXXXXXXXXXXXX'
 end
 ```
 
 That's it! And now you can use the static methods `send_message` and `send_attachemnt`, like this:
 
 ```ruby
-Slackpost.send_message("This is a test", 'test_channel')
+Slackpost.send_message('This is a test', 'test_channel')
 
-Slackpost.send_attachment("This is a test attachment", 'test_channel',
-                          "attachment title", "attachment message", "#0055bb")
+attachment = { fallback: 'Fallback message',
+               color: '#fab01a',
+               fields: [{ title: 'Attachment title',
+                          value: 'Attachment text' }] }
+Slackpost.send_attachment('This will send a single attachment', 'test_channel', attachment)
+
+attachments = [attachment, attachment, attachment]
+Slackpost.send_attachment('This will send multiple attachments', 'test_channel', attachments)
 
 ```
 
